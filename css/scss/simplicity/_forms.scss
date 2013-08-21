@@ -1,0 +1,256 @@
+//----- Simplicity Form Elements -----//
+
+$form-border-color: #cccccc !default;
+$form-border-radius: 0.4em !default;
+$form-check-distance: 0.5em !default;
+$form-check-size: 1em !default;
+$form-check-color: #00cc00 !default;
+$form-input-color: #ffffff !default;
+$form-padding: 0.4635em 0.618em !default;
+$form-secondary-color: #3297fd !default;
+$form-textarea-resize: true !default;
+$form-select-height: 20em !default;
+
+@if length($form-padding) < 4 {
+	$fp: $form-padding;
+	@if length($fp) == 1 { $fp: $fp $fp $fp $fp }
+	@if length($fp) == 2 { $fp: join($fp,$fp) }
+	@if length($fp) == 3 { $fp: join($fp,nth($fp,2)) }
+	$form-padding: $fp;
+}
+
+input, textarea, button, select, a.button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: $form-input-color;
+	border: 1px solid $form-border-color;
+	border-radius: $form-border-radius;
+	color: inherit;
+	display: inline-block;
+	font: inherit;
+	padding: $form-padding;
+	margin: 0;
+	vertical-align: middle;
+	line-height: normal;
+
+	&:focus {
+		border-color: $form-secondary-color;
+		outline: none;
+	}
+}
+
+input[type='text'], textarea, select {
+	max-width: 100%; width: 100%;
+	@if $form-textarea-resize { resize: none; }
+}
+
+input, button, select, a.button {
+	line-height: 1em;
+	min-height: nth($form-padding, 1) + 1em + nth($form-padding, 3);
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+	display: none;
+
+	+ label {
+		display: inline-block;
+		cursor: pointer;
+		padding-left: $form-check-size + $form-check-distance;
+		position: relative;
+
+		&:before, &:after {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 50%; left: 0;
+			-webkit-transform: translateY(-50%);
+			-moz-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			-o-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+		&:before {
+			width: $form-check-size; 
+			height: $form-check-size;
+			border: 1px solid $form-border-color;
+			background-color: $form-input-color;
+		}
+		&:after {
+			width: 0.5em; height: 0.5em;
+			display: none;
+		}
+		&:hover:before {
+			border-color: $form-secondary-color
+		}
+	}
+
+	&:checked + label:after {
+		display: block;
+	}
+}
+
+input[type='radio'] + label {
+
+	&:before, &:after {
+		border-radius: 50%;
+	}
+	&:after {
+		background-color: $form-secondary-color;
+		margin: 0 0.25em;
+	}
+}
+
+input[type='checkbox'] + label:after {
+	-webkit-transform: translateY(-75%) rotate(-45deg);
+	-moz-transform: translateY(-75%) rotate(-45deg);
+	-ms-transform: translateY(-75%) rotate(-45deg);
+	-o-transform: translateY(-75%) rotate(-45deg);
+	transform: translateY(-75%) rotate(-45deg);
+	border: solid $form-check-color;
+	border-width: 0 0 0.2em 0.2em;
+	margin-left: 0.1em;
+	width: 1em;
+}
+
+button,
+input[type='reset'],
+input[type='submit'],
+input[type='button'],
+a.button { 
+	cursor: pointer;
+
+	&:hover {
+		border-color: $form-secondary-color;
+	}
+	&:active {
+		$fp-top: nth($form-padding, 1) - 0.05em;
+		box-shadow: 0 $fp-top $fp-top rgba(0,0,0,0.1) inset;
+	}
+}
+
+.select {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: normal;
+	width: 100%;
+	cursor: pointer;
+
+	.selected-option {
+		position: relative;
+		background-color: $form-input-color;
+		border: 1px solid $form-border-color;
+		border-radius: $form-border-radius;
+		padding: $form-padding;
+		width: 100%;
+
+		&:before, &:after {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 50%; right: 0;
+			margin-top: 2px;
+			margin-right: nth($form-padding, 2) * 1.5;
+			border: solid transparent;
+			border-width: 0.6em 0.6em 0;
+			border-top-color: $form-border-color;
+			-webkit-transform: translateY(-50%);
+			-moz-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			-o-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+		&:after {
+			border-top-color: $form-input-color;
+			margin-top: 1px;
+		}
+	}
+	.select-options {
+		position: absolute;
+		top: 100%; left: 0;
+		margin-top: -1px;
+		width: 100%; z-index: 100;
+		padding: $form-padding;
+		padding-left: 0;
+		padding-right: 0;
+		background-color: $form-input-color;
+		border: 1px solid $form-border-color;
+		border-radius: $form-border-radius;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		display: none;
+		overflow-x: hidden;
+		max-height: $form-select-height;
+
+		.option-selected {
+			background-color: $form-secondary-color;
+			color: #fff;
+		}
+		&:hover .option-selected {
+			background-color: transparent;
+			color: inherit;
+		}
+		.option {
+			padding: $form-padding;
+
+			&:hover {
+				background-color: $form-secondary-color;
+				color: #fff;
+			}
+		}
+	}
+	.optgroup {
+		border: solid $form-border-color;
+		border-width: 1px 0;
+		padding: nth($form-padding, 1) 0 nth($form-padding, 3);
+		margin-top: nth($form-padding, 3);
+
+		+ .option {
+			margin-top: nth($form-padding, 1);
+		}
+		+ .optgroup {
+			border-top-width: 0;
+			margin-top: 0;
+		}
+		&:last-of-type {
+			border-bottom-width: 0;
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+	}
+	&.select-open {
+
+		.selected-option {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			border-color: $form-secondary-color;
+
+			&:before, &:after {
+				border-width: 0 0.6em 0.6em;
+				border-bottom-color: $form-secondary-color;
+				margin-top: 0;
+			}
+			&:after {
+				border-bottom-color: $form-input-color;
+				margin-top: 1px;
+			}
+		}
+		.select-options {
+			display: block;
+			border-color: $form-secondary-color;
+		}
+	}
+	&:hover, &:focus {
+		outline: none;
+
+		.selected-option {
+			border-color: $form-secondary-color;
+
+			&:before {
+				border-top-color: $form-secondary-color;
+			}
+		}
+	}
+}

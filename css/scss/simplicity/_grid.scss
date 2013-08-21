@@ -1,0 +1,61 @@
+//--------- Simplicity Grid ----------//
+
+$grid-gutter: 1.618em !default;
+$grid-spacing: 1.618em !default;
+
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.grid { 
+	margin: 0 -#{$grid-gutter/2};
+
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+*[class^='col'] {
+	display: inline-block;
+	vertical-align: top;
+	word-spacing: normal;
+	width: 100%;
+	padding: 0 $grid-gutter/2;
+	margin-bottom: $grid-spacing;
+	margin-right: -0.25em;
+}
+
+@function gcd( $n, $d ) {
+	@if $d != 0 {
+		@return gcd( $d, $n % $d );
+	} @else { @return $n; }
+}
+
+@mixin col( $n, $d ) {
+	$rn: $n/gcd( $n, $d );
+	$rd: $d/gcd( $n, $d );
+	@if $rn != $rd and (($rn % 2 != 0) or ($rd % 2 != 0)) {
+		.col-#{$rn}-#{$rd} { width: ($rn / $rd) * 100% }
+	}
+}
+
+@mixin pad( $n, $d ) {
+	$rn: $n/gcd( $n, $d );
+	$rd: $d/gcd( $n, $d );
+	@if $rn != $rd and (($rn % 2 != 0) or ($rd % 2 != 0)) {
+		.pad-#{$rn}-#{$rd} { margin-left: ($rn / $rd) * 100% }
+	}
+}
+
+@mixin dev-grid {
+	@for $d from 1 through 12 {
+		@for $n from 1 through $d {
+			@include col( $n, $d );
+			@include pad( $n, $d );
+		}
+	}
+}

@@ -1,0 +1,59 @@
+//------ Simplicity Typography -------//
+
+@function pow( $n, $e ) {
+  $v: $n;
+  @if $e > 1 { @for $i from 2 through $e { $v: $v * $n } }
+  @if $e < 1 { @for $i from 0 through -$e { $v: $v / $n } }
+  @return $v; 
+}
+
+@function sqrt( $n ) {
+  $r: 4;
+  @for $i from 1 through 50 { $r: $r - (pow($r, 2) - $n) / (2 * $r) }
+  @return $r;
+}
+
+$typography-font-size: 16px !default;
+
+$phi: 1/2 + sqrt(5) / 2;
+
+$font-size: $typography-font-size;
+$font-size-title: round( $font-size * pow($phi, 2) );
+$font-size-heading: round( $font-size * $phi );
+$font-size-subheading: round( $font-size * sqrt($phi) );
+$font-size-aux: round( $font-size * (1/sqrt($phi)) );
+
+$font-height: $font-size-heading;
+
+$spacing-single: $font-height;
+$spacing-double: $spacing-single * 2;
+$spacing-half: $spacing-single / 2;
+$spacing-3over2: $spacing-double + $spacing-half;
+
+html, body {
+	font-size: $font-size;
+	line-height: $font-height;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	line-height: 1em;
+	margin-bottom: $spacing-single;
+}
+
+h1 { font-size: $font-size-title }
+h2 { font-size: $font-size-heading }
+h3 { font-size: $font-size-subheading }
+h4, h5, h6 { font-size: $font-size }
+
+small { font-size: $font-size-aux }
+
+p { margin-bottom: $spacing-single }
+
+hr {
+	margin: 0;
+	border: none;
+	width: 100%; height: 0;
+	border-bottom: 1px solid;
+	margin-bottom: $spacing-single;
+}
