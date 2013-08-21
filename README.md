@@ -57,4 +57,4 @@ To use your newly crafted grids just create some HTML with the appropriate class
 
 *Note: It is recommended that you include another wrapper `div` within the columns so later when you're padding the content within the columns, you don't accidentally screw up the gutters.
 
-[Check out the example page.](http://wwilsman.github.io/Simplicity-Framework/)
+[Check out the example page.](http://wwilsman.github.io/Simplicity)
