@@ -1,3 +1,5 @@
+/* Peek at future Dropkick.js? <https://github.com/robdel12/dropkick> */
+/* UNFINISHED */
 
 function hasClass( e, c ) { var r = new RegExp('(^|\\s+)' + c + '(\\s+|$)'); return r.test( e.className ) }
 function addClass( e, c ) { if( !hasClass( e, c ) ) { e.className = e.className + ' ' + c } }
